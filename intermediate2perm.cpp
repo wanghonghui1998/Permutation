@@ -119,3 +119,132 @@ vector<vector<int>> perm_nbh_method(unsigned int n){
     
     return results;
 }
+
+int _empty_loc(vector<int> array, int empty_loc, int n){
+    int empty_count = 0;
+    for (int i = 0; i < n; i++){
+        if (array[i] == 0){
+            empty_count += 1;
+        }
+        if (empty_count > empty_loc){
+            return i;
+        }
+
+    }
+    return 0;
+}
+
+vector<int> intermediate2perm_inc_method(vector<int> intermediate_value)
+{
+    vector<int> perm;
+    vector<int> auxiliary;  // Indicate which location is already occupied with number.
+    int ai;                 // The i-th element of media number.
+    int loc_index;
+    unsigned long n = intermediate_value.size();
+    n += 1;
+
+    for (int i = 0; i < n; i++){ // Init the all the element of perm as 1, which leave out the last step to put 1 into perm.
+        perm.push_back(1);
+        auxiliary.push_back(0);
+    }
+
+    for (int i = 0; i < n - 1; i++){
+        ai = intermediate_value[i];               // Get the media number element.
+        loc_index = _empty_loc(auxiliary, ai, n); // Find the empty location.
+        perm[n - 1 - loc_index] = n - i;                  // The lowest media number corresponding to the largest number
+        auxiliary[loc_index] = 1;
+    }
+
+    return perm;
+}
+
+
+vector<int> intermediate2perm_dec_method(vector<int> intermediate_value)
+{
+    vector<int> perm;
+    vector<int> auxiliary;  // Indicate which location is already occupied with number.
+    int ai;                 // The i-th element of media number.
+    int loc_index;
+    unsigned long n = intermediate_value.size();
+    n += 1;
+
+    for (int i = 0; i < n; i++){ // Init the all the element of perm as 1, which leave out the last step to put 1 into perm.
+        perm.push_back(1);
+        auxiliary.push_back(0);
+    }
+
+    for (int i = n; i >= 2; i--){
+        ai = intermediate_value[i - 2];           // Get the media number element.
+        loc_index = _empty_loc(auxiliary, ai, n); // Find the empty location.
+        perm[n - 1 - loc_index] = i;
+        auxiliary[loc_index] = 1;
+    }
+
+    return perm;
+}
+
+
+
+
+
+
+vector<vector<int>> perm_dec_method(unsigned int n){
+    vector<vector<int>> results;
+    int num = factorial(n);
+    for(int i = 0; i < num; i++){
+        results.push_back(intermediate2perm_dec_method(idx2intermediate_dec_method(n, i)));
+    }
+    return results;
+}
+
+vector<vector<int>> perm_inc_method(unsigned int n){
+    vector<vector<int>> results;
+    int num = factorial(n);
+    for(int i = 0; i < num; i++){
+        results.push_back(intermediate2perm_inc_method(idx2intermediate_inc_method(n, i)));
+    }
+    return results;
+}
+
+/*vector<int> reverse_perm(vector<vector<int>> perms, int idx){
+    vector<int> results;
+    for(int i = perms[idx].size()-1; i>=0; i--){
+        results.push_back(perms[idx][i]);
+    }
+    return results;
+}*/
+vector<int> reverse_perm(vector<int> perm){
+    vector<int> results;
+    for(int i = perm.size()-1; i>=0; i--){
+        results.push_back(perm[i]);
+    }
+    return results;
+}
+
+vector<vector<int>> perm_dec_sym_method(unsigned int n){
+    vector<vector<int>> results;
+    int num = factorial(n);
+    for(int i = 0; i < num; i++){
+        if(i < num / 2)
+            results.push_back(intermediate2perm_dec_method(idx2intermediate_dec_method(n, i)));
+        else
+            results.push_back(reverse_perm(results[num-1-i]));
+            //results.push_back(reverse_perm(results, num-i-1));
+    }
+    return results;
+}
+
+vector<vector<int>> perm_inc_sym_method(unsigned int n){
+    vector<vector<int>> results;
+    int num = factorial(n);
+    for(int i = 0; i < num; i++){
+        if(i < num / 2)
+            results.push_back(intermediate2perm_inc_method(idx2intermediate_inc_method(n, i)));
+        else
+            results.push_back(reverse_perm(results[num-1-i]));
+            //results.push_back(reverse_perm(results, num-i-1));
+    }
+    return results;
+}
+
+

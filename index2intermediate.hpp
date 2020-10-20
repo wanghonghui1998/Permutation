@@ -10,7 +10,6 @@
 
 #include <stdio.h>
 #include <vector>
- 
 using namespace std;
 int factorial(unsigned int n);
 vector<int> idx2intermediate_dic_method(unsigned int n, int idx);
