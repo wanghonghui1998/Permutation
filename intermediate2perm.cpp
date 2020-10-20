@@ -184,10 +184,6 @@ vector<int> intermediate2perm_dec_method(vector<int> intermediate_value)
 }
 
 
-
-
-
-
 vector<vector<int>> perm_dec_method(unsigned int n){
     vector<vector<int>> results;
     int num = factorial(n);
@@ -206,13 +202,8 @@ vector<vector<int>> perm_inc_method(unsigned int n){
     return results;
 }
 
-/*vector<int> reverse_perm(vector<vector<int>> perms, int idx){
-    vector<int> results;
-    for(int i = perms[idx].size()-1; i>=0; i--){
-        results.push_back(perms[idx][i]);
-    }
-    return results;
-}*/
+
+
 vector<int> reverse_perm(vector<int> perm){
     vector<int> results;
     for(int i = perm.size()-1; i>=0; i--){
